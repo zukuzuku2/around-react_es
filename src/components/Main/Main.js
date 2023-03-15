@@ -2,25 +2,6 @@ import React from "react";
 import editButton from "../../images/change_image_profile.png";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 function Main(props) {
-  const [openPopupProfile, setOpenPopupProfile] = React.useState(false);
-  const [openPopupEditProfileImage, setOpenPopupEditProfileImage] =
-    React.useState(false);
-  const [openPopupAddCard, setOpenPopupAddCard] = React.useState(false);
-
-  function handleEditAvatarClick(evt) {
-    setOpenPopupEditProfileImage(true);
-  }
-
-  function handleEditProfileClick(evt) {
-    setOpenPopupProfile(true);
-    console.log(openPopupProfile);
-    <PopupWithForm fct={openPopupProfile} name={`profile`} />;
-  }
-
-  function handleAddPlaceClick(evt) {
-    setOpenPopupAddCard(true);
-  }
-
   return (
     <>
       <main className="content">
@@ -38,45 +19,6 @@ function Main(props) {
           </article>
           <div className="overlay"></div>
         </div>
-        <div
-          className={`popup popup_add-card ${openPopupAddCard ? "show" : ""}`}
-        >
-          <form className="form" noValidate>
-            <img
-              alt="Boton parq cerrar el modal o popup"
-              className="form__close"
-            />
-            <h5 className="form__title">Nuevo lugar</h5>
-            <div className="form__user-info">
-              <input
-                type="text"
-                placeholder="Título"
-                className="form__input"
-                id="form-title"
-                minLength="2"
-                maxLength="30"
-                required
-              />
-              <span className="form-title-error form__input-error">
-                Este campo es obligatorio
-              </span>
-              <input
-                type="url"
-                placeholder="Enlace a la imagen"
-                className="form__input"
-                id="form-link"
-                required
-              />
-              <span className="form-link-error form__input-error">
-                Este campo es obligatorio
-              </span>
-            </div>
-            <button className="form__submit form-add-card" type="submit">
-              <p className="form__submit-text form__submit-createText">Crear</p>
-            </button>
-          </form>
-          <div className="overlay"></div>
-        </div>
         <div className="popup popup_delete">
           <form className="form form-delete" noValidate>
             <img
@@ -90,7 +32,7 @@ function Main(props) {
           </form>
           <div className="overlay"></div>
         </div>
-        <div
+        {/* <div
           className={`popup popup_edit-profile ${
             openPopupEditProfileImage ? "show" : ""
           }`}
@@ -120,21 +62,20 @@ function Main(props) {
             </button>
           </form>
           <div className="overlay"></div>
-        </div>
-
+        </div> */}
         <section className="profile" id="profile">
           <img
             alt="Imagen de perfil de usuario"
             className="profile__image"
             id="profile__image"
-            onClick={handleEditAvatarClick}
+            onClick={props.onEditAvatarClick}
           />
           <div className="profile__info">
             <div className="profile__edit-container">
               <h2 className="profile__name" id="profile__name">
                 José Santos
               </h2>
-              <div className="profile__edit" onClick={handleEditProfileClick}>
+              <div className="profile__edit" onClick={props.onEditProfileClick}>
                 <img
                   src={editButton}
                   alt="Boton para editar los datos del prefil social"
@@ -146,7 +87,7 @@ function Main(props) {
               Qa Automator
             </h3>
           </div>
-          <div className="button" onClick={handleAddPlaceClick}>
+          <div className="button" onClick={props.onAddPlaceClick}>
             <div className="button__plus"></div>
           </div>
         </section>
