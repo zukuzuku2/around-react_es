@@ -5,6 +5,8 @@ import Footer from "./components/Footer/Footer";
 import headerImage from "./images/header.svg";
 import PopupWithForm from "./components/PopupWithForm/PopupWithForm";
 import btnClose from "./images/closeIcon.svg";
+import ImagePopup from "./components/ImagePopup/ImagePopup";
+import Card from "./components/Card/Card";
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
@@ -14,10 +16,17 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
 
+  const [selectedCard, setSelectedCard] = React.useState({});
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+
   function closeAllPopups() {
     setEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard({});
   }
 
   function handleEditAvatarClick(evt) {
@@ -39,6 +48,7 @@ function App() {
         onEditProfileClick={handleEditProfileClick}
         onAddPlaceClick={handleAddPlaceClick}
         onEditAvatarClick={handleEditAvatarClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
       <PopupWithForm
@@ -160,6 +170,11 @@ function App() {
           </button>
         </form>
       </PopupWithForm>
+      <ImagePopup
+        isOpen={!!selectedCard._id}
+        card={selectedCard}
+        onClose={closeAllPopups}
+      />
     </div>
   );
 }
