@@ -98,6 +98,10 @@ class Api {
     };
     return this.fetchData(`users/me/avatar`, requestOptions);
   }
+
+  changeLikeCardStatus(cardId, status) {
+    status ? this.updateLike(cardId) : this.removeLike(cardId);
+  }
 }
 
 export const api = new Api({
