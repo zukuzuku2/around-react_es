@@ -53,6 +53,13 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  function handleUpdateUser({ name, about }) {
+    api.updateUserInfo({ name, about }).then((data) => {
+      setCurrentUser(data);
+    });
+    closeAllPopups();
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -67,6 +74,7 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
         />
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}

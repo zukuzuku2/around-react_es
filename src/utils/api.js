@@ -82,7 +82,6 @@ class Api {
       body: JSON.stringify({
         name: options.name,
         about: options.about,
-        avatar: options.avatar,
       }),
     };
     return this.fetchData(`users/me`, requestOptions);
@@ -100,7 +99,7 @@ class Api {
   }
 
   changeLikeCardStatus(cardId, status) {
-    status ? this.updateLike(cardId) : this.removeLike(cardId);
+    return status ? this.updateLike(cardId) : this.removeLike(cardId);
   }
 }
 
