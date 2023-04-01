@@ -4,13 +4,16 @@ import heart from "../../images/heart.svg";
 import blackHeart from "../../images/blackHeart.png";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick, onCardLike }) {
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
   function handleClick() {
     onCardClick(card);
   }
   function handleLikeClick() {
     onCardLike(card);
+  }
+  function handleDeleteClick() {
+    onCardDelete(card._id);
   }
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -22,6 +25,7 @@ function Card({ card, onCardClick, onCardLike }) {
             src={isOwn ? deleteButton : ""}
             alt={isOwn ? "imagen de cesto de basura para eliminar cards" : ""}
             className={isOwn ? "cards__delete-image" : ""}
+            onClick={handleDeleteClick}
           />
         </button>
         <img

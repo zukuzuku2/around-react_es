@@ -1,18 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import editButton from "../../images/change_image_profile.png";
-import { api } from "../../utils/api";
 import Card from "../Card/Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Main(props) {
   const currentUser = useContext(CurrentUserContext);
+  const imgProfile = useRef();
+  function changeImageProfile() {
+    imgProfile.current.src = currentUser.avatar;
+  }
+
+  useEffect(() => {
+    changeImageProfile();
+  }, [currentUser.avatar]);
 
   return (
     <>
       <main className="content">
         <section className="profile" id="profile">
           <img
-            src={currentUser.avatar}
+            ref={imgProfile}
+            // src={currentUser.avatar}
             alt="Imagen de perfil de usuario"
             className="profile__image"
             id="profile__image"
@@ -47,6 +55,7 @@ function Main(props) {
                 onCardClick={props.onCardClick}
                 card={card}
                 onCardLike={props.onCardLike}
+                onCardDelete={props.onCardDelete}
               />
             );
           })}

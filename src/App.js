@@ -3,14 +3,13 @@ import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 import headerImage from "./images/header.svg";
-import PopupWithForm from "./components/PopupWithForm/PopupWithForm";
-import btnClose from "./images/closeIcon.svg";
 import ImagePopup from "./components/ImagePopup/ImagePopup";
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
 import { useEffect } from "react";
 import { api } from "./utils/api";
 import { EditProfilePopup } from "./components/EditProfilePopup/EditProfilePopup";
 import { EditAvatarPopup } from "./components/EditAvatarPopup/EditAvatarPopup";
+import { AddPlacePopup } from "./components/AddPlacePopup/AddPlacePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -29,13 +28,20 @@ function App() {
     api.getUserInfo().then((data) => {
       setCurrentUser(data);
     });
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     api.getCards().then((data) => {
       setCards(data);
     });
   }, []);
+
+  function handleAddPlaceSubmit({ name, link }) {
+    api.addCard({ name: name, link: link, owner: currentUser }).then((data) => {
+      setCards([data, ...cards]);
+    });
+    closeAllPopups();
+  }
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -67,8 +73,16 @@ function App() {
     closeAllPopups();
   }
 
+  function handleUpdateAvatar(avatar) {
+    api.updateProfilePhoto({ avatar: avatar }).then(() => closeAllPopups());
+  }
+
   function handleCardDelete(cardID) {
-    api.deleteCard(cardID).then((data) => {});
+    api.deleteCards(cardID).then(() => {
+      api.getCards().then((data) => {
+        setCards(data);
+      });
+    });
   }
 
   function handleCardLike(card) {
@@ -91,6 +105,7 @@ function App() {
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
+          currentUser={currentUser}
         />
         <Footer />
         <EditProfilePopup
@@ -98,51 +113,15 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-        <PopupWithForm
-          isOpen={isAddPlacePopupOpen}
-          name={`add-card`}
-          title={`Nuevo Lugar`}
-        >
-          <form className="form" noValidate>
-            <img
-              src={btnClose}
-              alt="Boton para cerrar el modal o popup"
-              className="form__close"
-              onClick={closeAllPopups}
-            />
-            <h5 className="form__title">Nuevo lugar</h5>
-            <div className="form__user-info">
-              <input
-                type="text"
-                placeholder="Título"
-                className="form__input"
-                id="form-title"
-                minLength="2"
-                maxLength="30"
-                required
-              />
-              <span className="form-title-error form__input-error">
-                Este campo es obligatorio
-              </span>
-              <input
-                type="url"
-                placeholder="Enlace a la imagen"
-                className="form__input"
-                id="form-link"
-                required
-              />
-              <span className="form-link-error form__input-error">
-                Este campo es obligatorio
-              </span>
-            </div>
-            <button className="form__submit form-add-card" type="submit">
-              <p className="form__submit-text form__submit-createText">Crear</p>
-            </button>
-          </form>
-        </PopupWithForm>
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
+          onChangeAvatar={handleUpdateAvatar}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onSubmit={handleAddPlaceSubmit}
         />
         <ImagePopup
           isOpen={!!selectedCard._id}

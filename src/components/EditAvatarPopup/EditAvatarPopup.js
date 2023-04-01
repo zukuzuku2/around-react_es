@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import btnClose from "../../images/closeIcon.svg";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
-export function EditAvatarPopup({ isOpen, onClose }) {
+export function EditAvatarPopup({ isOpen, onClose, onChangeAvatar }) {
+  const [urlAvatarProfile, setUrlAvatarProfile] = useState();
+
+  function handleLinkChange(e) {
+    setUrlAvatarProfile(e.target.value);
+  }
+
+  function handleAvatarProfile(e) {
+    e.preventDefault();
+    onChangeAvatar(urlAvatarProfile);
+  }
   return (
     <PopupWithForm
       name={`edit-profile`}
       title={`Cambiar foto de perfil`}
       isOpen={isOpen}
     >
-      <form className="form" noValidate>
+      <form className="form" noValidate onSubmit={handleAvatarProfile}>
         <img
           src={btnClose}
           alt="Boton para cerrar el modal o popup"
@@ -20,12 +30,14 @@ export function EditAvatarPopup({ isOpen, onClose }) {
         <div className="form__user-info">
           <input
             type="url"
+            onChange={handleLinkChange}
             placeholder="Inserte url de imagen"
             className="form__input"
             id="form-name"
             minLength="2"
             maxLength="80"
             required
+            value={urlAvatarProfile}
           />
           <span className="form-name-error form__input-error">
             Este campo es obligatorio

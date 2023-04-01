@@ -38,6 +38,7 @@ class Api {
       body: JSON.stringify({
         name: options.name,
         link: options.link,
+        owner: options.owner,
       }),
     };
     return this.fetchData("cards", requestOptions);
