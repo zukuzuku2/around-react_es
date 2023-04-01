@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import btnClose from "../../images/closeIcon.svg";
-import PopupWithForm from "../PopupWithForm/PopupWithForm";
+import btnClose from "../images/closeIcon.svg";
+import PopupWithForm from "./PopupWithForm";
 
 export function EditAvatarPopup({ isOpen, onClose, onChangeAvatar }) {
   const [urlAvatarProfile, setUrlAvatarProfile] = useState();

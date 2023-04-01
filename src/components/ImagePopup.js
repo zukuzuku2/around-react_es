@@ -1,4 +1,4 @@
-import btnClose from "../../images/closeIcon.svg";
+import btnClose from "../images/closeIcon.svg";
 
 export default function ImagePopup(props) {
   return (
