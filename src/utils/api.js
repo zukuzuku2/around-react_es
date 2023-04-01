@@ -1,4 +1,4 @@
-export default class Api {
+class Api {
   constructor(option = {}) {
     this._option = option;
     this._header = new Headers();
@@ -103,3 +103,10 @@ export default class Api {
     return status ? this.updateLike(cardId) : this.removeLike(cardId);
   }
 }
+
+const api = new Api({
+  token: "590c9c0f-0cfb-43a1-be02-96b36cadf695",
+  url: "https://around.nomoreparties.co/v1/web_es_cohort_04",
+});
+
+export default api;
