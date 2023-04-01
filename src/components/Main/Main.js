@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import editButton from "../../images/change_image_profile.png";
-import Card from "../Card/Card";
+import Card from "../Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Main(props) {

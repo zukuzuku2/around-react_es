@@ -1,8 +1,8 @@
 import React from "react";
-import deleteButton from "../../images/delete.svg";
-import heart from "../../images/heart.svg";
-import blackHeart from "../../images/blackHeart.png";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import deleteButton from "../images/delete.svg";
+import heart from "../images/heart.svg";
+import blackHeart from "../images/blackHeart.png";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
