@@ -7,11 +7,18 @@ class Api {
   }
 
   fetchData(url, requestOptions) {
-    return fetch(`${this._option.url}/${url}`, requestOptions).then(
-      (response) => {
-        return response.json(this._option.url, url);
-      }
-    );
+    const allowedPath = /^[a-zA-Z0-9/_-]+$/;
+    if (!allowedPath.test(url)) {
+      return Promise.reject(new Error('Invalid request path'));
+    }
+    const base = new URL(this._option.url);
+    const fullUrl = new URL(url.replace(/^\/+/, ''), base.href.replace(/\/?$/, '/'));
+    if (fullUrl.origin !== base.origin) {
+      return Promise.reject(new Error('Invalid URL origin'));
+    }
+    return fetch(fullUrl.toString(), requestOptions).then((response) => {
+      return response.json();
+    });
   }
 
   getCards() {
