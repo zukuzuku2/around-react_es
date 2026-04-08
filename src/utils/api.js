@@ -112,8 +112,8 @@ class Api {
 }
 
 const api = new Api({
-  token: "590c9c0f-0cfb-43a1-be02-96b36cadf695",
-  url: "https://around.nomoreparties.co/v1/web_es_cohort_04",
+  token: process.env.REACT_APP_TOKEN,
+  url: process.env.REACT_APP_URL,
 });
 
 export default api;

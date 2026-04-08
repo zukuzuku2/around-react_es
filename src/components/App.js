@@ -28,7 +28,7 @@ function App() {
     api.getUserInfo().then((data) => {
       setCurrentUser(data);
     });
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     api.getCards().then((data) => {
